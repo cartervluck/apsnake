@@ -7,11 +7,12 @@
 import pynput #Library 'pynput' by Moses Palmer
 
 #START CODE BLOCK: CARTER LUCK
-board = [['' for i in range(10)] for j in range(10)] #10 by 10 matrix of ''. Backwards indexing: board[y][x] to index board (just for ease of display)
+board = [['' for i in range(20)] for j in range(20)] #10 by 10 matrix of ''. Backwards indexing: board[y][x] to index board (just for ease of display)
 fruitLocation = (0,0) #tuple for location of the fruit. (x,y)
 
 def printBoard():
-	print("|---------------------|")
+	border = "-".join(["|"] + ["-" for i in range(len(board[0]))] + ["|"])
+	print(border)
 	for i in range(len(board)):
 		printstring = ["|"]
 		for j in range(len(board[i])):
@@ -22,5 +23,5 @@ def printBoard():
 		printstring.append("|")
 		printstring = " ".join(printstring)
 		print(printstring)
-	print("|---------------------|")
-printBoard() #just to test
+	print(border)
+#END CODE BLOCK
