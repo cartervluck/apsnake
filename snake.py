@@ -4,3 +4,8 @@
 #START CODE BLOCK: CARTER LUCK
 #{code}
 #END CODE BLOCK
+import pynput #Library 'pynput' by Moses Palmer
+
+#START CODE BLOCK: CARTER LUCK
+board = [['' for i in range(10)] for j in range(10)] #10 by 10 matrix of ''. Backwards indexing: board[y][x] to index board (just for ease of display)
+fruitLocation = (0,0) #tuple for location of the fruit. (x,y)
