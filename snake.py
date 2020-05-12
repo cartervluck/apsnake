@@ -6,12 +6,15 @@
 #END CODE BLOCK
 import pynput #Library 'pynput' by Moses Palmer
 import random #Library 'random' from python standard library by Python Software Foundation
+import time #Library 'time' from python standard library by Python Software Foundation
 
 #START CODE BLOCK: CARTER LUCK
 board = [['' for i in range(20)] for j in range(20)] #10 by 10 matrix of ''. Backwards indexing: board[y][x] to index board (just for ease of display)
 fruitLocation = (0,1) #tuple for location of the fruit. (x,y)
+playing = True
 
 def printBoard():
+	global snake
 	border = "-".join(["|"] + ["-" for i in range(len(board[0]))] + ["|"])
 	print(border)
 	for i in range(len(board)):
@@ -19,7 +22,9 @@ def printBoard():
 		for j in range(len(board[i])):
 			if fruitLocation == (j,i):
 				printstring.append("O")
-			else: #TODO: PRINT X IF PART OF SNAKE IS HERE
+			elif (j,i) in snake:
+                                printstring.append("X")
+			else: #TODO:
 				printstring.append(" ")
 		printstring.append("|")
 		printstring = " ".join(printstring)
@@ -56,8 +61,7 @@ def updateSnake():
         xCoord += 1
     if (xCoord not in range(len(board)) or 
           yCoord not in range(len(board)) or
-          xCoord in [snake[i][0] for i in range(len(snake))] or 
-          yCoord in [snake[i][1] for i in range(len(snake))]):
+          (xCoord,yCoord) in [snake[i] for i in range(len(snake))]): #LINE EDITED BY CARTER LUCK FOR SLIGHT LOGIC FIX
         gameOver()
 
 
@@ -80,14 +84,18 @@ def onPress(key):
 
 #END CODE BLOCK
 
+#START CODE BLOCK: CARTER LUCK
 #TODO: Implement behavior
 def gameOver():
-    return
+    playing = False
 
+listener = pynput.keyboard.Listener(
+    on_press=onPress,
+    on_release=lambda x: None)
+listener.start()
 
 #TODO: Add to main game loop
-#    updateSnake()
-#    listener = pynput.keyboard.Listener(
-#        on_press=onPress,
-#        on_release=lambda x: None)
-#    listener.start()
+while playing:
+    updateSnake()
+    printBoard()
+    time.sleep(0.25)
