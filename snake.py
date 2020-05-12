@@ -15,6 +15,7 @@ playing = True
 
 def printBoard():
 	global snake
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 	border = "-".join(["|"] + ["-" for i in range(len(board[0]))] + ["|"])
 	print(border)
 	for i in range(len(board)):
@@ -44,7 +45,7 @@ def checkFruit():
     global snakeLength
     global fruitLocation
     if snake[0] == fruitLocation:
-        fruitLocation = (random.randint(0, len(board)), random.randint(0, len(board)))
+        fruitLocation = (random.randint(0, len(board)-1), random.randint(0, len(board)-1)) #LINE EDITED BY CARTER LUCK FOR LOGIC
         snakeLength += 1
 
 def updateSnake():
@@ -67,10 +68,7 @@ def updateSnake():
 
     snake.insert(0, (xCoord, yCoord))
     checkFruit()
-    print(direction)
-    print(xCoord)
     snake = snake[0:snakeLength]
-    print(snake)
     
         
 
@@ -87,6 +85,7 @@ def onPress(key):
 #START CODE BLOCK: CARTER LUCK
 #TODO: Implement behavior
 def gameOver():
+    global playing
     playing = False
 
 listener = pynput.keyboard.Listener(
@@ -98,4 +97,19 @@ listener.start()
 while playing:
     updateSnake()
     printBoard()
+    time.sleep(0.25)
+
+#game has ended, show end screen
+endtext = ["|---------------------|",
+"|                     |",
+"|      GAME OVER      |",
+"|                     |",
+"".join(["|    YOUR SCORE: ",str(len(snake)),] + [" " for i in range(5-len(str(len(snake))))] + ["|"]),
+"|                     |",
+"|---------------------|"]
+
+for j in range(len(endtext)):
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    for q in range(j+1):
+        print(endtext[q])
     time.sleep(0.25)
